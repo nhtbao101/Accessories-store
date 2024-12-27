@@ -12,20 +12,20 @@ datasource db {
 model admin {
   id         Int        @id @default(autoincrement())
   created_at DateTime   @default(now()) @db.Timestamptz(6)
-  updated_at DateTime?  @default(now()) @db.Timestamptz(6)
+  updated_at DateTime?  @updatedAt
   avatar     String?
   role_id    Int
   full_name  String?
-  email      String?
-  password   String?
-  users_role users_role @relation(fields: [role_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  email      String
+  password   String
+  admin_role admin_role @relation(fields: [role_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model category {
   id          Int        @id @unique @default(autoincrement())
   created_at  DateTime   @default(now()) @db.Timestamptz(6)
-  updated_at  DateTime?  @default(now()) @db.Timestamptz(6)
+  updated_at  DateTime?  @updatedAt
   name        String?
   description String?
   products    products[]
@@ -35,7 +35,7 @@ model category {
 model order_item {
   id         Int       @id @unique @default(autoincrement())
   created_at DateTime  @db.Timestamptz(6)
-  updated_at DateTime? @db.Timestamptz(6)
+  updated_at DateTime? @updatedAt
   order_id   Int?
   product_id Int?
   quantity   Int?      @db.SmallInt
@@ -48,7 +48,7 @@ model order_item {
 model orders {
   id          Int          @id @unique @default(autoincrement())
   created_at  DateTime     @default(now()) @db.Timestamptz(6)
-  updated_at  DateTime?    @db.Timestamptz(6)
+  updated_at  DateTime?    @updatedAt
   customer_id Int?
   order_date  DateTime?    @db.Timestamptz(6)
   status      Int?         @db.SmallInt
@@ -62,7 +62,7 @@ model orders {
 model payment {
   id             Int       @id @unique @default(autoincrement())
   created_at     DateTime  @default(now()) @db.Timestamptz(6)
-  updated_at     DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime? @updatedAt
   name           String?
   description    String?
   order_id       Int?
@@ -81,7 +81,7 @@ model products {
   quantity    Int?         @db.SmallInt
   category_id Int
   created_at  DateTime     @default(now()) @db.Timestamptz(6)
-  updated_at  DateTime?    @db.Timestamptz(6)
+  updated_at  DateTime?    @updatedAt
   order_item  order_item[]
   category    category     @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
@@ -90,20 +90,22 @@ model products {
 model users {
   id           Int       @id @unique @default(autoincrement())
   name         String?
-  email        String?
+  email        String?   @unique
   phone_number String?
+  password     String?
   address      String?
   created_at   DateTime  @default(now()) @db.Timestamptz(6)
-  updated_at   DateTime? @db.Timestamptz(6)
+  updated_at   DateTime? @updatedAt
   user_role    Int?      @db.SmallInt
   orders       orders[]
+  test         String?   @unique
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model users_role {
+model admin_role {
   id         Int       @id @unique @default(autoincrement())
   created_at DateTime  @default(now()) @db.Timestamptz(6)
-  updated_at DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at DateTime? @updatedAt
   name       String?
-  admin      admin[]
+  admin      admin[]   @relation
 }
