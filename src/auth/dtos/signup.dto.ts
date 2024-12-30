@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform, Expose } from 'class-transformer';
 import {
   IsEmail,
   IsNotEmpty,
@@ -10,27 +11,29 @@ import {
 export class SignUpUserDto {
   @IsEmail()
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({ example: 'email@gmail.com' })
   email: string;
 
   @IsString()
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({ example: 'Abcd1234' })
   password: string;
 
   @IsString()
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({ example: 'MegaTron' })
   name: string;
 
-  @IsPhoneNumber()
+  @Transform(({ value, obj }) => obj.phone_number || value)
+  @IsPhoneNumber('VN')
   @IsString()
-  @ApiProperty({ name: 'phone_number' })
+  @Expose({ name: 'phone_number' })
+  @ApiProperty({ name: 'phone_number', example: '84912345678' })
   phoneNumber: string;
 
   @IsOptional()
   @IsString()
-  @ApiProperty()
+  @ApiProperty({ example: '23 An Nhon 11, Da Nang' })
   address?: string;
 }
 
@@ -42,7 +45,6 @@ export class CreateAdminDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  // @ApiProperty({ name: 'password' })
   password: string;
 
   @IsNotEmpty()
