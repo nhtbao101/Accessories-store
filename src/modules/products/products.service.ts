@@ -7,7 +7,7 @@ export class ProductService {
 
   async getProducts() {
     try {
-      return this.prisma.products.findMany();
+      return this.prisma.product.findMany();
     } catch (error) {
       console.log('error', error);
     }

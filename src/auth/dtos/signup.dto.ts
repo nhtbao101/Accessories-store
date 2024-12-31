@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform, Expose } from 'class-transformer';
 import {
   IsEmail,
   IsNotEmpty,
@@ -24,11 +23,10 @@ export class SignUpUserDto {
   @ApiProperty({ example: 'MegaTron' })
   name: string;
 
-  @Transform(({ value, obj }) => obj.phone_number || value)
   @IsPhoneNumber('VN')
+  @IsNotEmpty()
   @IsString()
-  @Expose({ name: 'phone_number' })
-  @ApiProperty({ name: 'phone_number', example: '84912345678' })
+  @ApiProperty({ example: '84912345678' })
   phoneNumber: string;
 
   @IsOptional()
@@ -37,28 +35,29 @@ export class SignUpUserDto {
   address?: string;
 }
 
-export class CreateAdminDto {
+export class SignUpAdminDto {
   @IsEmail()
-  @ApiProperty({ name: 'email' })
+  @IsNotEmpty()
+  @ApiProperty({ example: 'email@gmail.com' })
   email: string;
 
   @IsString()
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({ example: 'Abcd1234' })
   password: string;
 
-  @IsNotEmpty()
   @IsString()
-  @IsOptional()
-  @ApiProperty({ name: 'full_name' })
+  @IsNotEmpty()
+  @ApiProperty({ example: 'Admin name' })
   fullName: string;
 
   @IsOptional()
   @IsString()
-  @ApiProperty({ name: 'avatar' })
-  avatar: string;
+  @ApiProperty({ example: 'https://picsum.photos/200' })
+  avatar?: string;
 
+  @IsOptional()
   @IsNotEmpty()
-  @ApiProperty({ name: 'role_id' })
+  @ApiProperty({ example: 1 })
   roleId: number;
 }
