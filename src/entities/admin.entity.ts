@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 
-export class UserEntity {
-  constructor(partial: Partial<UserEntity>) {
+export class AdminEntity {
+  constructor(partial: Partial<AdminEntity>) {
     Object.assign(this, partial);
   }
 
@@ -19,10 +19,7 @@ export class UserEntity {
   password: string;
 
   @ApiProperty()
-  phoneNumber: string;
-
-  @ApiProperty()
-  address?: string;
+  avatar?: string;
 
   @ApiProperty()
   createdAt: Date;
@@ -31,8 +28,5 @@ export class UserEntity {
   updatedAt: Date;
 
   @ApiProperty()
-  userRole: number;
-
-  @ApiProperty()
-  orders: any;
+  roleId: number;
 }

@@ -7,7 +7,7 @@ export class AuthRepository {
     this.prisma = prisma;
   }
   async createUser(user) {
-    return this.prisma.users.create({
+    return this.prisma.user.create({
       data: user,
     });
   }
