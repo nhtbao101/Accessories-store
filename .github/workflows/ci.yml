@@ -17,7 +17,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-      - name: Npm Installation
-        run: npm ci
+      - name: Install dependencies
+        run: |
+          cd nest
+          npm install
       - name: Check JS lint
         run: npm run lint
