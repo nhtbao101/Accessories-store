@@ -9,7 +9,7 @@ on:
 jobs:
   linters-checking:
     name: Check JS lint and syntax
-    runs-on: ['self-hosted', 'linux', 'x64']
+    runs-on: ['self-hosted', 'linux', 'x64', 'ubuntu:latest']
     steps:
       - name: Checkout git repository
         uses: actions/checkout@v3
