@@ -14,6 +14,7 @@ import { SignInUserDto } from './dtos/signin.dto';
 import HTTP_STATUS from 'src/constants/http-code';
 import { UserEntity } from 'src/entities/user.entity';
 import { ERROR_MESSAGE } from 'src/constants/error-message';
+import { AdminEntity } from 'src/entities/admin.entity';
 
 @Injectable()
 export class AuthService {
@@ -65,7 +66,8 @@ export class AuthService {
       );
     }
     return {
-      accessToken: await this.jwtService.sign({ req }),
+      data: new AdminEntity(user),
+      accessToken: await this.jwtService.signAsync({ email: req.email }),
     };
   }
 
@@ -115,7 +117,6 @@ export class AuthService {
       user: new UserEntity(user),
       accessToken: await this.jwtService.signAsync({
         email: req.email,
-        password: req.password,
       }),
     };
   }
