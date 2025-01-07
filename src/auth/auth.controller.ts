@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { ApiCreatedResponse, ApiResponse } from '@nestjs/swagger';
+import { ApiResponse } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 
 import { SignUpAdminDto, SignUpUserDto } from './dtos/signup.dto';
@@ -24,12 +24,13 @@ export class AuthController {
   }
 
   @Post('/signup/user')
-  @ApiCreatedResponse({ type: UserEntity })
+  @ApiResponse({ type: UserEntity })
   async signUpUser(@Body() user: SignUpUserDto) {
     return new UserEntity(await this.authService.signUpUser(user));
   }
 
   @Post('/signin/user')
+  @ApiResponse({ type: UserEntity })
   async signInUser(@Body() user: SignInUserDto) {
     return this.authService.signInUser(user);
   }

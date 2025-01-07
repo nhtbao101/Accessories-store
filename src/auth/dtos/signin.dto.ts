@@ -5,7 +5,7 @@ export class SignInUserDto {
   @IsEmail()
   @IsNotEmpty()
   @ApiProperty({
-    example: 'email@gmail.com',
+    example: 'nhtbao101@gmail.com',
   })
   email: string;
 

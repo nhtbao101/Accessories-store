@@ -6,20 +6,20 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  async getUsers() {
-    return this.prisma.user.findMany();
+  async getUsersByAdmin() {
+    return await this.prisma.user.findMany();
   }
 
-  async getUser(email: string) {
-    return this.prisma.user.findUnique({
+  async getUserByAdmin(email: string) {
+    return await this.prisma.user.findUnique({
       where: {
         email: email,
       },
     });
   }
 
-  async updateUser(data: SignUpUserDto) {
-    return this.prisma.user.update({
+  async updateUserByAdmin(data: SignUpUserDto) {
+    return await this.prisma.user.update({
       where: {
         email: data.email,
       },

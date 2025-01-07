@@ -1,11 +1,11 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { UserService } from 'src/modules/user/user.service';
+import { AdminService } from 'src/modules/admin/admin.service';
 
 @Injectable()
-export class JWTStrategy extends PassportStrategy(Strategy, 'JWT') {
-  constructor(private userService: UserService) {
+export class AdminJWTStrategy extends PassportStrategy(Strategy, 'admin-jwt') {
+  constructor(private adminService: AdminService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -13,12 +13,14 @@ export class JWTStrategy extends PassportStrategy(Strategy, 'JWT') {
     });
   }
   async validate(payload: { email: string }) {
-    const user = await this.userService.getUser(payload.email);
+    if (!payload.email) {
+      throw new UnauthorizedException('Invalid payload: Missing email');
+    }
+    const admin = await this.adminService.getAdminById(payload.email);
 
-    if (!user) {
+    if (!admin) {
       throw new UnauthorizedException();
     }
-
-    return user;
+    return admin;
   }
 }
