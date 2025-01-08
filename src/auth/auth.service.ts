@@ -67,7 +67,11 @@ export class AuthService {
     }
     return {
       data: new AdminEntity(user),
-      accessToken: await this.jwtService.signAsync({ email: req.email }),
+      accessToken: await this.jwtService.signAsync({
+        id: user.id,
+        email: req.email,
+        role: user.roleId,
+      }),
     };
   }
 
@@ -116,7 +120,9 @@ export class AuthService {
     return {
       user: new UserEntity(user),
       accessToken: await this.jwtService.signAsync({
+        id: user.id,
         email: req.email,
+        userRole: user.userRole,
       }),
     };
   }

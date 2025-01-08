@@ -13,8 +13,8 @@ export class AuthController {
 
   @Post('/signup/admin')
   @ApiResponse({ type: AdminEntity })
-  async signUpAdmin(@Body() user: SignUpAdminDto) {
-    return new AdminEntity(await this.authService.signUpAdmin(user));
+  async signUpAdmin(@Body() user: SignUpAdminDto): Promise<AdminEntity> {
+    return await this.authService.signUpAdmin(user);
   }
 
   @ApiResponse({ type: AdminEntity })
@@ -25,8 +25,8 @@ export class AuthController {
 
   @Post('/signup/user')
   @ApiResponse({ type: UserEntity })
-  async signUpUser(@Body() user: SignUpUserDto) {
-    return new UserEntity(await this.authService.signUpUser(user));
+  async signUpUser(@Body() user: SignUpUserDto): Promise<UserEntity> {
+    return await this.authService.signUpUser(user);
   }
 
   @Post('/signin/user')

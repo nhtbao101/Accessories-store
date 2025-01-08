@@ -21,7 +21,7 @@ export class SignUpUserDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({ example: 'MegaTron' })
-  name: string;
+  fullName: string;
 
   @IsPhoneNumber('VN')
   @IsNotEmpty()
