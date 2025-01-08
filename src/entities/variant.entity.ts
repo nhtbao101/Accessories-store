@@ -1,21 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { VariantEntity } from './variant.entity';
 
-export class ProductEntity {
+export class VariantEntity {
   @ApiProperty()
   id: number;
 
   @ApiProperty()
-  name: string;
+  size: string;
 
   @ApiProperty()
-  description: string;
+  color: string;
 
   @ApiProperty()
-  image: string;
-
-  @ApiProperty()
-  categoryId: number;
+  material: string;
 
   @ApiProperty()
   price: number;
@@ -24,11 +20,14 @@ export class ProductEntity {
   quantity: number;
 
   @ApiProperty()
+  productId: number;
+
+  @ApiProperty()
   createAt: Date;
 
   @ApiProperty()
   updatedAt: Date;
 
   @ApiProperty()
-  variant: VariantEntity;
+  image: string;
 }

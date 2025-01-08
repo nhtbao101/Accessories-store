@@ -15,7 +15,7 @@ export class UserEntity {
   @ApiProperty()
   email: string;
 
-  @Exclude()
+  @Exclude({ toPlainOnly: true })
   password: string;
 
   @ApiProperty()
@@ -34,5 +34,8 @@ export class UserEntity {
   userRole: number;
 
   @ApiProperty()
-  orders: any;
+  orders?: any;
+
+  @ApiProperty()
+  accessToken?: string;
 }

@@ -15,7 +15,7 @@ export class AdminEntity {
   @ApiProperty()
   email: string;
 
-  @Exclude()
+  @Exclude({ toPlainOnly: true })
   password: string;
 
   @ApiProperty()
@@ -29,4 +29,7 @@ export class AdminEntity {
 
   @ApiProperty()
   roleId: number;
+
+  @ApiProperty()
+  accessToken?: string;
 }
